@@ -1,0 +1,19 @@
+class NumArray {
+    private:
+    vector<int>num;
+public:
+// Since we need to handle multiple queries efficiently, I’ll precompute a prefix sum in the constructor to allow O(1) queries.
+    NumArray(vector<int>& nums) {
+        int n=nums.size();
+        num.resize(n);
+        num[0]=nums[0];
+        for(int i=1;i<n;i++){
+            num[i]=nums[i]+num[i-1];
+        }
+    }
+    
+    int sumRange(int left, int right) {
+        if(left==0) return num[right];
+        return num[right]-num[left-1];
+    }
+};
