@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     int data;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *      TreeNode(int data) : data(data) , left(nullptr) , right(nullptr) {}
+ * };
+ **/
+
+class Solution{	
+	public:
+		vector<int> floorCeilOfBST(TreeNode* node,int key){
+            TreeNode*root=node;
+			//your code goes here
+             vector<int>ans(2);
+            //floor
+            int max1=INT_MIN;
+
+            while(root!=nullptr){
+                if(root->data==key){
+                    max1=root->data;
+                    break;
+                }
+                else if(root->data>key) {
+                    root=root->left;
+                }
+                else{
+                    max1=max(root->data,max1);
+                    root=root->right;
+                }
+            }
+
+            ans[0]=max1==INT_MIN?-1:max1;
+            root=node;
+            //ceil
+            int min1=INT_MAX;
+
+            while(root!=nullptr){
+                if(root->data==key){
+                    min1=root->data;
+                    break;
+                }
+                else if(root->data>key) {
+                    min1=min(root->data,min1);
+                    root=root->left;
+                }
+                else{
+                    root=root->right;
+                }
+            }
+            ans[1]=min1==INT_MAX?-1:min1;
+            return ans;
+		}
+};
