@@ -1,0 +1,49 @@
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+pair<int, int> findFloorAndCeil(const vector<int>& nums, int x) {
+    int n = nums.size();
+    int low = 0, high = n - 1;
+
+    int floor = -1, ceil = -1;
+
+    // Find floor
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (nums[mid] == x) {
+            floor = nums[mid];
+            break; // floor found directly
+        }
+        else if (nums[mid] < x) {
+            floor = nums[mid]; // candidate
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    // Reset for ceil
+    low = 0, high = n - 1;
+
+    // Find ceil
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (nums[mid] == x) {
+            ceil = nums[mid];
+            break; // ceil found directly
+        }
+        else if (nums[mid] > x) {
+            ceil = nums[mid]; // candidate
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return {floor, ceil};
+}
+
