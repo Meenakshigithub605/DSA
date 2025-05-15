@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+// Integer power function to avoid floating point precision issues
+long long ipow(long long base, int exp) {
+    long long result = 1;
+    while (exp > 0) {
+        if (exp & 1) result *= base;
+        base *= base;
+        exp >>= 1;
+    }
+    return result;
+}
+
+int main() {
+    int n = 3, m = 27;
+
+    if (m == 1) {  // nth root of 1 is always 1
+        cout << 1 << "\n";
+        return 0;
+    }
+
+    int left = 1, right = m;
+    int ans = -1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        long long val = ipow(mid, n);
+
+        if (val == m) {
+            cout << mid << "\n";
+            return 0;
+        }
+        else if (val < m) {
+            left = mid + 1;
+        }
+        else {
+            right = mid - 1;
+        }
+    }
+
+    cout << -1 << "\n"; // no integer root found
+    return 0;
+}
+
