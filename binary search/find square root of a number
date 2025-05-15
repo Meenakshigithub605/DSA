@@ -1,0 +1,30 @@
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n = 36;
+    if(n == 0) {
+        cout << 0 << "\n";
+        return 0;
+    }
+    int left = 1, right = n / 2;
+    int ans = 0;
+    while(left <= right){
+        int mid = left + (right - left) / 2;
+        long long square = (long long)mid * mid;  // Use long long to avoid overflow
+        if(square == n){
+            cout << mid << "\n";
+            return 0;
+        }
+        else if(square < n){
+            ans = mid;      // mid is a candidate
+            left = mid + 1;
+        }
+        else{
+            right = mid - 1;
+        }
+    }
+    cout << ans << "\n";
+    return 0;
+}
