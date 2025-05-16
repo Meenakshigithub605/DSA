@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+using namespace std;
+
+// Check if we can allocate books such that no student gets more than 'maxPages'
+bool isPossible(vector<int>& nums, int m, int maxPages) {
+    int studentCount = 1;
+    int currentSum = 0;
+
+    for (int pages : nums) {
+        if (pages > maxPages) return false;
+
+        if (currentSum + pages > maxPages) {
+            studentCount++;
+            currentSum = pages;
+        } else {
+            currentSum += pages;
+        }
+    }
+
+    return studentCount <= m;
+}
+
+int allocateBooks(vector<int>& nums, int m) {
+    int n = nums.size();
+    if (m > n) return -1;
+
+    int left = *max_element(nums.begin(), nums.end());
+    int right = accumulate(nums.begin(), nums.end(), 0);
+    int result = -1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (isPossible(nums, m, mid)) {
+            result = mid; // Try for better (smaller max pages)
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    vector<int> nums1 = {12, 34, 67, 90};
+    int m1 = 2;
+    cout << allocateBooks(nums1, m1) << endl; // Output: 113
+
+    vector<int> nums2 = {25, 46, 28, 49, 24};
+    int m2 = 4;
+    cout << allocateBooks(nums2, m2) << endl; // Output: 71
+
+    vector<int> nums3 = {15, 17, 20};
+    int m3 = 4;
+    cout << allocateBooks(nums3, m3) << endl; // Output: -1
+
+    return 0;
+}
