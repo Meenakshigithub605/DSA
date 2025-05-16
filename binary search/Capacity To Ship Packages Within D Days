@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool total(vector<int>& weights,int m, int d){
+        int count=1,sum=0;
+        for(int i=0;i<weights.size();i++){
+            sum+=weights[i];
+            if(sum>m){
+                count+=1;
+                sum=weights[i];
+            }
+        }
+        if(count<=d) return true;
+        else return false;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int left= *max_element(weights.begin(), weights.end()),right=accumulate(weights.begin(),weights.end(),0);
+        while(left<right){
+            int mid=left+(right-left)/2;
+            if(total(weights,mid,days))right=mid;
+            else left=mid+1;
+        }
+        return left;
+    }
+    
+};
