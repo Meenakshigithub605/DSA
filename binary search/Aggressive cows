@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Check if it's possible to place k cows with at least 'dist' distance
+bool canPlace(vector<int>& stalls, int dist, int k) {
+    int count = 1; // First cow is placed at the first stall
+    int last_position = stalls[0];
+
+    for (int i = 1; i < stalls.size(); ++i) {
+        if (stalls[i] - last_position >= dist) {
+            count++;
+            last_position = stalls[i];
+            if (count == k) return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n = 6, k = 4;
+    vector<int> nums = {0, 3, 4, 7, 10, 9};
+
+    sort(nums.begin(), nums.end()); // Sort stall positions
+
+    int left = 1; // Minimum distance can be at least 1
+    int right = nums.back() - nums.front(); // Max distance between first and last stall
+    int result = 0;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (canPlace(nums, mid, k)) {
+            result = mid;       // Try for a bigger minimum distance
+            left = mid + 1;
+        } else {
+            right = mid - 1;    // Try smaller distances
+        }
+    }
+
+    cout << result << endl;
+    return 0;
+}
+
