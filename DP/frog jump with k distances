@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int ans(int n,vector<int>&h,vector<int>&dp,int k){
+        if(n==0) return 0;
+        if(dp[n]!=-1) return dp[n];
+        int min1=INT_MAX;
+        for(int i=1;i<=k;i++){
+            if(n-i>=0){
+            int step=ans(n-i,h,dp,k)+abs(h[n]-h[n-i]);
+            min1=min(min1,step);
+            }
+        }
+        return dp[n]=min1;
+    }
+    int frogJump(vector<int>& heights, int k) {
+        int n=heights.size();
+       vector<int>dp(n,-1);
+        return ans(n-1,heights,dp,k);
+        //memoization done now tabulation
+        // vector<int>dp(n,INT_MAX);
+        // dp[0]=0;
+        // for(int i=1;i<n;i++){
+        //     for(int j=1;j<=k;j++){
+        //         if(i-j>=0){
+        //         int step=dp[i-j]+abs(heights[i]-heights[i-j]);
+        //         dp[i]=min(dp[i],step);
+        //         }
+        //     }
+        // }
+        // return dp[n-1];
+    }
+};
