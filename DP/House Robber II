@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int ans(vector<int>nums,int start,int end){
+        int prev=0,curr=0;
+        for(int i=start;i<=end;i++){
+            int newcurr=max(curr,prev+nums[i]);
+            prev=curr;
+            curr=newcurr;
+        }
+        return curr;
+    }
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        if(n==1) return nums[0];
+        if(n==2) return max(nums[0],nums[1]);
+        //case-1:rob from 0 to n-2 //exclude last
+        int rob1=ans(nums,0,n-2);
+        //case-1:rob from 1 to n-1 //exclude last
+        int rob2=ans(nums,1,n-1);
+        return max(rob1,rob2);
+    }
+};
