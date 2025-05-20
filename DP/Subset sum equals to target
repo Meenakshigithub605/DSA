@@ -1,0 +1,20 @@
+
+class Solution{   
+public:
+    bool ans(int n,vector<int>a,int t,vector<vector<int>>& dp){
+        if(t==0) return true;
+        if(n==0) return a[0]==t;
+        if(dp[n][t]!=-1) return dp[n][t]; 
+        bool nottake=ans(n-1,a,t,dp);
+        bool take=false;
+        if(a[n]<=t) take=ans(n-1,a,t-a[n],dp);
+        return dp[n][t]=nottake || take;
+
+    } 
+    bool isSubsetSum(vector<int>arr, int target){
+        int n=arr.size();
+        vector<vector<int>>dp(n,vector<int>(target+1,-1));
+        return ans(n-1,arr,target,dp);
+       
+    }
+};
