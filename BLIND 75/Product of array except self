@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        // vector<int>ans1(nums.size(),1),ans2(nums.size(),1),ans3(nums.size(),1);
+        // for(int i=nums.size()-2;i>=0;i--){
+        //     ans1[i]=nums[i+1]*ans1[i+1];
+        // }
+        // for(int i=1;i<nums.size();i++){
+        //     ans2[i]=nums[i-1]*ans2[i-1];
+        // }
+        // for(int i=0;i<nums.size();i++){
+        //     ans3[i]=ans1[i]*ans2[i];
+        // }
+        // return ans3;
+        //not optimal
+        int n=nums.size();
+        vector<int>ans(n,1);
+        int pre=1;
+        for(int i=0;i<n;i++){
+            ans[i]=pre;
+            pre*=nums[i];
+        }
+        int suf=1;
+        for(int i=n-1;i>=0;i--){
+            ans[i]*=suf;
+            suf*=nums[i];
+        }
+        return ans;
+    }
+};
