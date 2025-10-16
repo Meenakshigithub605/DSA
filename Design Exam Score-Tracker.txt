@@ -1,0 +1,30 @@
+class ExamTracker {
+public:
+    map<int,pair<int,long long>>rec;
+    long long cf=0;
+    ExamTracker() {
+    }
+    
+    void record(int time, int score) {
+        cf+=score;
+        rec[time]={score,cf};
+    }
+    
+    long long totalScore(int startTime, int endTime) {
+        long long sum=0;
+        auto start=rec.lower_bound(startTime);
+        auto end=rec.upper_bound(endTime);
+        long long startsum=0;
+        if(start!=rec.begin()) {start--;startsum=start->second.second;}
+        long long endsum=0;
+        if(end!=rec.begin()) {end--;endsum=end->second.second;}
+        return endsum-startsum;
+    }
+};
+
+/**
+ * Your ExamTracker object will be instantiated and called as such:
+ * ExamTracker* obj = new ExamTracker();
+ * obj.record(time,score);
+ * long long param_2 = obj.totalScore(startTime,endTime);
+ */©leetcode
