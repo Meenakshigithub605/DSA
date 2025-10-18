@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> decimalRepresentation(int n) {
+        vector<int>ans;
+        int i=0;
+        while(n){
+            int mid=n%10;
+            if(mid!=0) ans.push_back(mid*pow(10,i));
+            i+=1;
+            n/=10;
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};©leetcode
